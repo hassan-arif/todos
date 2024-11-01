@@ -13,4 +13,7 @@ export const useTodo = create((set) => ({
     { id: '9', text: 'Buy coffee'},
     { id: '10', text: 'Buy sugar'},
   ],
+  delete: (id) => set((state) => ({
+    todos: state.todos.filter((todo) => todo.id !== id),
+  })),
 }));

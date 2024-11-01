@@ -46,7 +46,7 @@ function Todo() {
                     ]}>
                       <IconByVariant path={'update'} stroke={colors.gray400} />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => {}} style={[
+                    <TouchableOpacity onPress={() => useTodo.getState().delete(item.id)} style={[
                       // backgrounds.gray400
                     ]}>
                       <IconByVariant path={'delete'} stroke={colors.red500} />
