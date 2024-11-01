@@ -19,7 +19,7 @@ function ApplicationNavigator() {
       <NavigationContainer theme={navigationTheme}>
         <Stack.Navigator key={variant} screenOptions={{ headerShown: false }}>
           <Stack.Screen component={Startup} name={Paths.Startup} />
-          <Stack.Screen component={Example} name={Paths.Example} />
+          {/* <Stack.Screen component={Example} name={Paths.Example} /> */}
           <Stack.Screen component={Todo} name={Paths.Todo} />
         </Stack.Navigator>
       </NavigationContainer>
