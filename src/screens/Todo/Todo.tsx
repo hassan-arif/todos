@@ -11,6 +11,7 @@ function Todo() {
     backgrounds 
   } = useTheme();
   const todos = useTodo((state) => state.todos);
+  const [newTodo, setNewTodo] = React.useState('');
   const deviceWidth = Dimensions.get('window').width;
 
   return (
@@ -84,10 +85,15 @@ function Todo() {
                 fonts.gray200, 
                 fonts.size_16, 
               ]}
+              defaultValue={newTodo}
               placeholder="Add new todo"
               placeholderTextColor={colors.gray200}
+              onChangeText={(text) => {setNewTodo(text)}}
             />
-            <TouchableOpacity onPress={() => {}} style={[
+            <TouchableOpacity onPress={() => {
+              useTodo.getState().add(newTodo);
+              setNewTodo('');
+            }} style={[
               layout.itemsCenter
             ]}>
               <IconByVariant path={'add'} stroke={colors.gray400} />

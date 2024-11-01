@@ -1,4 +1,6 @@
 import { create } from 'zustand';
+import "react-native-get-random-values";
+import { v4 as uuidv4 } from 'uuid';
 
 export const useTodo = create((set) => ({
   todos: [
@@ -25,5 +27,8 @@ export const useTodo = create((set) => ({
   ],
   delete: (id) => set((state) => ({
     todos: state.todos.filter((todo) => todo.id !== id),
+  })),
+  add: (text) => set((state) => ({
+    todos: [...state.todos, { id: uuidv4(), text }],
   })),
 }));
