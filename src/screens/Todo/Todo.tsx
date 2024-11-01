@@ -6,6 +6,9 @@ import { useTodo } from '@/store/todo'
 import { useTheme } from '@/theme';
 import { IconByVariant } from '@/components/atoms';
 
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs(); //Ignore all log notifications
+
 function Todo() {
   const { layout, gutters, fonts, colors, borders,
     backgrounds 
