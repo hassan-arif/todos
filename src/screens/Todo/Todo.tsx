@@ -23,8 +23,6 @@ function Todo() {
   const toggleItem = useTodo((state) => state.toggle);
   const updateItem = useTodo((state) => state.update);
 
-  console.log(todos);
-
   function renderItem(props: any) {
     const { item } = props
     return (
@@ -46,7 +44,7 @@ function Todo() {
               style={[ 
                 fonts.size_16,
                 fonts.gray200,
-                { margin: 0, padding: 0},
+                { margin: 0, padding: 0, borderWidth: 0 },
               ]}
               defaultValue={item.text}
               onChangeText={(text) => {
@@ -88,7 +86,7 @@ function Todo() {
         style={[
           layout.fullHeight,
           gutters.paddingHorizontal_12,
-          backgrounds.gray100
+          backgrounds.gray800
         ]}
       >
         <View>
