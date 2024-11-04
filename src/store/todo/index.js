@@ -29,6 +29,6 @@ export const useTodo = create((set) => ({
     todos: state.todos.filter((todo) => todo.id !== id),
   })),
   add: (text) => set((state) => ({
-    todos: [...state.todos, { id: uuidv4(), text }],
+    todos: [...state.todos, { id: uuidv4(), text, done: true }],
   })),
 }));
