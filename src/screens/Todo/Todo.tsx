@@ -13,9 +13,46 @@ function Todo() {
   const { layout, gutters, fonts, colors, borders,
     backgrounds 
   } = useTheme();
+
+  const deviceWidth = Dimensions.get('window').width;
+  
   const todos = useTodo((state) => state.todos);
   const [newTodo, setNewTodo] = React.useState('');
-  const deviceWidth = Dimensions.get('window').width;
+  const deleteItem = useTodo((state) => state.delete);
+  const addItem = useTodo((state) => state.add);
+
+  function renderItem(props: any) {
+    const { item } = props
+    return (
+      <View style={[ 
+        gutters.marginBottom_12
+      ]}>
+        <View style={[
+          layout.row, 
+          layout.justifyBetween, 
+          gutters.paddingTop_12
+        ]}>
+          <Text style={[
+            fonts.gray200, 
+            fonts.size_16,
+          ]}>{item.text}</Text>
+
+          <View style={[layout.row]}>
+            <TouchableOpacity onPress={() => {
+              useTodo.getState().toggle(item.id);
+            }} style={[
+              gutters.marginRight_12
+            ]}>
+              <IconByVariant path={'update'} stroke={colors.gray400} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => deleteItem(item.id)}>
+              <IconByVariant path={'delete'} stroke={colors.red500} />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    )
+  }
 
   return (
     <SafeScreen>
@@ -32,33 +69,7 @@ function Todo() {
           <FlatList
             style={{marginBottom: 140}}
             data={todos}
-            renderItem={
-              ({item}) => <View style={[ 
-                gutters.marginBottom_12
-              ]}>
-                <View style={[
-                  layout.row, 
-                  layout.justifyBetween, 
-                  gutters.paddingTop_12
-                ]}>
-                  <Text style={[
-                    fonts.gray200, 
-                    fonts.size_16,
-                  ]}>{item.text}</Text>
-
-                  <View style={[layout.row]}>
-                    <TouchableOpacity onPress={() => {}} style={[
-                      gutters.marginRight_12
-                    ]}>
-                      <IconByVariant path={'update'} stroke={colors.gray400} />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => useTodo.getState().delete(item.id)}>
-                      <IconByVariant path={'delete'} stroke={colors.red500} />
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </View>
-            }
+            renderItem={renderItem}
             keyExtractor={item => item.id}
           />
         </View>
@@ -94,7 +105,7 @@ function Todo() {
               onChangeText={(text) => {setNewTodo(text)}}
             />
             <TouchableOpacity onPress={() => {
-              useTodo.getState().add(newTodo);
+              addItem(newTodo);
               setNewTodo('');
             }} style={[
               layout.itemsCenter
