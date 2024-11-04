@@ -20,6 +20,10 @@ function Todo() {
   const [newTodo, setNewTodo] = React.useState('');
   const deleteItem = useTodo((state) => state.delete);
   const addItem = useTodo((state) => state.add);
+  const toggleItem = useTodo((state) => state.toggle);
+  const updateItem = useTodo((state) => state.update);
+
+  console.log(todos);
 
   function renderItem(props: any) {
     const { item } = props
@@ -32,23 +36,47 @@ function Todo() {
           layout.justifyBetween, 
           gutters.paddingTop_12
         ]}>
-          <Text style={[
-            fonts.gray200, 
-            fonts.size_16,
-          ]}>{item.text}</Text>
+          {item.done ? (
+            <Text style={[
+              fonts.gray200, 
+              fonts.size_16,
+            ]}>{item.text}</Text>
+          ) : (
+            <TextInput
+              style={[ 
+                fonts.size_16,
+                fonts.gray200,
+                { margin: 0, padding: 0},
+              ]}
+              defaultValue={item.text}
+              onChangeText={(text) => {
+                item.text = text;
+              }}
+            />
+          )}
 
-          <View style={[layout.row]}>
-            <TouchableOpacity onPress={() => {
-              useTodo.getState().toggle(item.id);
-            }} style={[
-              gutters.marginRight_12
-            ]}>
-              <IconByVariant path={'update'} stroke={colors.gray400} />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => deleteItem(item.id)}>
-              <IconByVariant path={'delete'} stroke={colors.red500} />
-            </TouchableOpacity>
-          </View>
+          {item.done ? (
+            <View style={[layout.row]}>
+              <TouchableOpacity onPress={() => toggleItem(item.id)} style={[
+                gutters.marginRight_12
+              ]}>
+                <IconByVariant path={'update'} stroke={colors.gray400} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => deleteItem(item.id)}>
+                <IconByVariant path={'delete'} stroke={colors.red500} />
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <View style={[layout.row]}>
+              <TouchableOpacity onPress={() => {
+                updateItem(item.id, item.text);
+              }} style={[
+                gutters.marginRight_12
+              ]}>
+                <IconByVariant path={'save'} stroke={colors.gray400} />
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
       </View>
     )

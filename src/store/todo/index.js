@@ -31,4 +31,20 @@ export const useTodo = create((set) => ({
   add: (text) => set((state) => ({
     todos: [...state.todos, { id: uuidv4(), text, done: true }],
   })),
+  toggle: (id) => set((state) => ({
+    todos: state.todos.map((todo) => {
+      if (todo.id === id) {
+        return { id, text: todo.text, done: !todo.done };
+      }
+      return todo;
+    }),
+  })),
+  update: (id, text) => set((state) => ({
+    todos: state.todos.map((todo) => {
+      if (todo.id === id) {
+        return { id, text, done: !todo.done };
+      }
+      return todo;
+    }),
+  })),
 }));
