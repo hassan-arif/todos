@@ -10,8 +10,15 @@ export const getTodos = createAsyncThunk('getUsers', async () => {
       .then(response => response.data)
       .catch((error) => {
         console.log(error)
-      }
-    )
+      })
+});
+
+export const deleteTodos = createAsyncThunk("deleteTodos", async (id) => {
+  return await todoClient.delete(`/${id}`)
+    .then(response => response.data)
+    .catch((error) => {
+      console.log(error)
+    })
 });
 
 const initialState: {
@@ -21,7 +28,7 @@ const initialState: {
 } = {
   todoList: [],
   loading: false,
-  error: undefined,
+  error: undefined
 }
 
 export const todoSlice = createSlice({
@@ -40,6 +47,20 @@ export const todoSlice = createSlice({
       .addCase(getTodos.rejected, (state, action) => {
         state.loading = false
         state.todoList = []
+        state.error = action.error.message
+      })
+      .addCase(deleteTodos.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(deleteTodos.fulfilled, (state, action) => {
+        state.loading = false
+        state.error = ''
+
+        let index = state.todoList.findIndex((todo => todo.id === action.meta.arg))
+        state.todoList.splice(index, 1)
+      })
+      .addCase(deleteTodos.rejected, (state, action) => {
+        state.loading = false
         state.error = action.error.message
       })
   }

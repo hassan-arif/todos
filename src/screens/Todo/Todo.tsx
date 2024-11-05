@@ -6,7 +6,7 @@ import { useTheme } from '@/theme';
 import { IconByVariant } from '@/components/atoms';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { getTodos } from '@/store/todoSlice';
+import { getTodos, deleteTodos } from '@/store/todoSlice';
 
 import { LogBox } from 'react-native';
 LogBox.ignoreAllLogs(); //Ignore all log notifications
@@ -18,6 +18,7 @@ function Todo() {
   const deviceWidth = Dimensions.get('window').width;
 
   const todos = useSelector(state => state.todos.todoList);
+
   const dispatch = useDispatch();
   const [newTodo, setNewTodo] = React.useState('');
 
@@ -61,7 +62,7 @@ function Todo() {
                 <IconByVariant path={'update'} stroke={colors.gray400} />
               </TouchableOpacity>
               <TouchableOpacity onPress={() => {
-                // deleteItem(item.id)
+                dispatch(deleteTodos(item.id));
               }}>
                 <IconByVariant path={'delete'} stroke={colors.red500} />
               </TouchableOpacity>
@@ -146,10 +147,6 @@ function Todo() {
             </TouchableOpacity>
           </View>
         </View>
-        {/* <Text style={[fonts.gray200, fonts.size_24, fonts.bold]}>
-          {todos.length}
-          {console.log(todos[0])}
-        </Text> */}
       </View>
     </SafeScreen>
   )
