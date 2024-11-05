@@ -6,7 +6,7 @@ import { useTheme } from '@/theme';
 import { IconByVariant } from '@/components/atoms';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { getTodos, deleteTodos } from '@/store/todoSlice';
+import { getTodos, deleteTodos, createTodos } from '@/store/todoSlice';
 
 import { LogBox } from 'react-native';
 LogBox.ignoreAllLogs(); //Ignore all log notifications
@@ -138,7 +138,11 @@ function Todo() {
               onChangeText={(text) => {setNewTodo(text)}}
             />
             <TouchableOpacity onPress={() => {
-              // addItem(newTodo);
+              dispatch(createTodos({
+                userId: 1, 
+                title: newTodo, 
+                completed: false
+              }));
               setNewTodo('');
             }} style={[
               layout.itemsCenter
