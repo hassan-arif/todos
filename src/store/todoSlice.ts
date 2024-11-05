@@ -43,7 +43,6 @@ export const toggleTodos = createAsyncThunk("toggleTodos", async (props) => {
 
 export const updateTodos = createAsyncThunk("updateTodos", async (props) => {
   const {id, title } = props
-  console.log(id, title)
 
   return await todoClient.patch(`/${id}`, { title })
     .then((response) => response.data)
