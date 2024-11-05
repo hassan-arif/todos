@@ -31,32 +31,18 @@ function Todo() {
       <View style={[ 
         gutters.marginBottom_12
       ]}>
-        <View style={[
-          layout.row, 
-          layout.justifyBetween, 
-          gutters.paddingTop_12
-        ]}>
-          {item.completed ? (
+        {item.completed ? (
+          <View style={[
+            layout.row, 
+            layout.justifyBetween, 
+            gutters.paddingTop_12
+          ]}>
             <Text style={[
               fonts.gray200, 
               fonts.size_16,
               {width: '85%'}
             ]}>{item.title}</Text>
-          ) : (
-            <TextInput
-              style={[ 
-                fonts.size_16,
-                fonts.gray200,
-                { margin: 0, padding: 0, borderWidth: 0, width: '85%' },
-              ]}
-              defaultValue={item.title}
-              onChangeText={(text) => {
-                listItem = text;
-              }}
-            />
-          )}
 
-          {item.completed ? (
             <View style={[layout.row]}>
               <TouchableOpacity onPress={() => {
                 dispatch(toggleTodos({
@@ -74,7 +60,34 @@ function Todo() {
                 <IconByVariant path={'delete'} stroke={colors.red500} />
               </TouchableOpacity>
             </View>
-          ) : (
+          </View>
+
+        ) : (
+
+          <View style={[
+            borders.rounded_16,
+            layout.row, 
+            layout.justifyBetween,
+            {
+              padding: 6,
+              paddingTop: 12,
+              alignItems: 'center', 
+              backgroundColor: '#111111'
+            }
+          ]}>
+            <TextInput
+              style={[ 
+                fonts.size_16,
+                fonts.gray200,
+                { margin: 0, padding: 0, borderWidth: 0, width: '85%' },
+              ]}
+              defaultValue={item.title}
+              onChangeText={(text) => {
+                listItem = text;
+              }}
+              autoCorrect={false}
+            />
+
             <View style={[layout.row]}>
               <TouchableOpacity onPress={() => {
                 dispatch(updateTodos({
@@ -87,8 +100,8 @@ function Todo() {
                 <IconByVariant path={'save'} stroke={colors.gray400} />
               </TouchableOpacity>
             </View>
-          )}
-        </View>
+          </View>
+        )}
       </View>
     )
   }
@@ -107,10 +120,10 @@ function Todo() {
         ]}
       >
         <View>
-          <Text style={[fonts.size_32, fonts.gray200, fonts.bold]}>Todo List ({todos.length})</Text>
+          <Text style={[fonts.size_32, fonts.gray200, fonts.bold, gutters.marginTop_16, gutters.marginBottom_16]}>Todo List ({todos.length})</Text>
         
           <FlatList
-            style={{marginBottom: 140}}
+            style={{marginBottom: 180}}
             data={todos}
             renderItem={renderItem}
             keyExtractor={item => item.id}
