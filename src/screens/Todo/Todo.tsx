@@ -6,7 +6,7 @@ import { useTheme } from '@/theme';
 import { IconByVariant } from '@/components/atoms';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { getTodos, deleteTodos, createTodos } from '@/store/todoSlice';
+import { getTodos, deleteTodos, createTodos, toggleTodos, updateTodos } from '@/store/todoSlice';
 
 import { LogBox } from 'react-native';
 LogBox.ignoreAllLogs(); //Ignore all log notifications
@@ -24,6 +24,8 @@ function Todo() {
 
   function renderItem(props: any) {
     const { item } = props
+    let listItem = item.title
+
     return (
       <View style={[ 
         gutters.marginBottom_12
@@ -46,8 +48,8 @@ function Todo() {
                 { margin: 0, padding: 0, borderWidth: 0 },
               ]}
               defaultValue={item.title}
-              onChangeText={(title) => {
-                item.title = title;
+              onChangeText={(text) => {
+                listItem = text;
               }}
             />
           )}
@@ -55,7 +57,10 @@ function Todo() {
           {item.completed ? (
             <View style={[layout.row]}>
               <TouchableOpacity onPress={() => {
-                // toggleItem(item.id)
+                dispatch(toggleTodos({
+                  id: item.id,
+                  completed: false
+                }));
               }} style={[
                 gutters.marginRight_12
               ]}>
@@ -70,7 +75,10 @@ function Todo() {
           ) : (
             <View style={[layout.row]}>
               <TouchableOpacity onPress={() => {
-                // updateItem(item.id, item.text);
+                dispatch(updateTodos({
+                  id: item.id,
+                  title: listItem
+                }));
               }} style={[
                 gutters.marginRight_12
               ]}>
@@ -141,7 +149,7 @@ function Todo() {
               dispatch(createTodos({
                 userId: 1, 
                 title: newTodo, 
-                completed: false
+                completed: true
               }));
               setNewTodo('');
             }} style={[

@@ -31,6 +31,27 @@ export const createTodos = createAsyncThunk("createTodos", async (props) => {
     })
 });
 
+export const toggleTodos = createAsyncThunk("toggleTodos", async (props) => {
+  const {id, completed } = props
+
+  return await todoClient.patch(`/${id}`, { completed })
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error)
+    })
+});
+
+export const updateTodos = createAsyncThunk("updateTodos", async (props) => {
+  const {id, title } = props
+  console.log(id, title)
+
+  return await todoClient.patch(`/${id}`, { title })
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error)
+    })
+});
+
 const initialState: {
   todoList: any[],
   size: number,
@@ -93,6 +114,37 @@ export const todoSlice = createSlice({
         state.size += 1
       })
       .addCase(createTodos.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.error.message
+      })
+      .addCase(toggleTodos.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(toggleTodos.fulfilled, (state, action) => {
+        state.loading = false
+        state.error = ''
+
+        const {id, completed} = action.payload
+        let index = state.todoList.findIndex((todo => todo.id === id))
+        state.todoList[index].completed = completed
+      })
+      .addCase(toggleTodos.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.error.message
+      })
+      .addCase(updateTodos.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(updateTodos.fulfilled, (state, action) => {
+        state.loading = false
+        state.error = ''
+
+        const {id, title} = action.payload
+        let index = state.todoList.findIndex((todo => todo.id === id))
+        state.todoList[index].title = title
+        state.todoList[index].completed = true
+      })
+      .addCase(updateTodos.rejected, (state, action) => {
         state.loading = false
         state.error = action.error.message
       })
