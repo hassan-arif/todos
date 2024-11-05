@@ -39,13 +39,14 @@ function Todo() {
             <Text style={[
               fonts.gray200, 
               fonts.size_16,
+              {width: '85%'}
             ]}>{item.title}</Text>
           ) : (
             <TextInput
               style={[ 
                 fonts.size_16,
                 fonts.gray200,
-                { margin: 0, padding: 0, borderWidth: 0 },
+                { margin: 0, padding: 0, borderWidth: 0, width: '85%' },
               ]}
               defaultValue={item.title}
               onChangeText={(text) => {
