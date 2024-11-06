@@ -5,8 +5,7 @@ import { SafeScreen } from '@/components/templates'
 import { useTheme } from '@/theme';
 import { IconByVariant } from '@/components/atoms';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { getTodos, deleteTodos, createTodos, toggleTodos, updateTodos } from '@/store/todoSlice';
+import { useGetTodosQuery } from '@/store/todoApi';
 
 import { LogBox } from 'react-native';
 LogBox.ignoreAllLogs(); //Ignore all log notifications
@@ -16,11 +15,12 @@ function TodoRTK() {
   } = useTheme();
 
   const deviceWidth = Dimensions.get('window').width;
+  const { data, error, isLoading, refetch } = useGetTodosQuery();
 
-  const todos = useSelector(state => state.todos.todoList);
-  const loading = useSelector(state => state.todos.loading);
+  // const todos = useSelector(state => state.todos.todoList);
+  // const loading = useSelector(state => state.todos.loading);
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [newTodo, setNewTodo] = React.useState('');
 
   function renderItem(props: any) {
@@ -45,17 +45,17 @@ function TodoRTK() {
 
             <View style={[layout.row]}>
               <TouchableOpacity onPress={() => {
-                dispatch(toggleTodos({
-                  id: item.id,
-                  completed: false
-                }));
+                // dispatch(toggleTodos({
+                //   id: item.id,
+                //   completed: false
+                // }));
               }} style={[
                 gutters.marginRight_12
               ]}>
                 <IconByVariant path={'update'} stroke={colors.gray400} />
               </TouchableOpacity>
               <TouchableOpacity onPress={() => {
-                dispatch(deleteTodos(item.id));
+                // dispatch(deleteTodos(item.id));
               }}>
                 <IconByVariant path={'delete'} stroke={colors.red500} />
               </TouchableOpacity>
@@ -90,10 +90,10 @@ function TodoRTK() {
 
             <View style={[layout.row]}>
               <TouchableOpacity onPress={() => {
-                dispatch(updateTodos({
-                  id: item.id,
-                  title: listItem
-                }));
+                // dispatch(updateTodos({
+                //   id: item.id,
+                //   title: listItem
+                // }));
               }} style={[
                 gutters.marginRight_12
               ]}>
@@ -106,10 +106,6 @@ function TodoRTK() {
     )
   }
 
-  React.useEffect(() => {
-    dispatch(getTodos());
-  }, [dispatch]);
-
   return (
     <SafeScreen>
       <View
@@ -120,11 +116,11 @@ function TodoRTK() {
         ]}
       >
         <View>
-          <Text style={[fonts.size_32, fonts.gray200, fonts.bold, gutters.marginTop_16, gutters.marginBottom_16]}>Todo List ({todos.length})</Text>
+          <Text style={[fonts.size_32, fonts.gray200, fonts.bold, gutters.marginTop_16, gutters.marginBottom_16]}>Todo List {data ? `(${data.length})` : ''}</Text>
         
           <FlatList
             style={{marginBottom: 180}}
-            data={todos}
+            data={data}
             renderItem={renderItem}
             keyExtractor={item => item.id}
           />
@@ -160,17 +156,17 @@ function TodoRTK() {
               placeholderTextColor={colors.gray200}
               onChangeText={(text) => {setNewTodo(text)}}
               autoFocus = {true}
-              editable = {!loading}
+              editable = {!isLoading}
             />
-            {loading ? (
+            {isLoading ? (
               <ActivityIndicator size="small" color={colors.gray400} />
             ) : (
               <TouchableOpacity onPress={() => {
-                dispatch(createTodos({
-                  userId: 1, 
-                  title: newTodo, 
-                  completed: true
-                }));
+                // dispatch(createTodos({
+                //   userId: 1, 
+                //   title: newTodo, 
+                //   completed: true
+                // }));
                 setNewTodo('');
               }} style={[
                 layout.itemsCenter
