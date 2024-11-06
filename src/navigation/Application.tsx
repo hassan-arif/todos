@@ -7,7 +7,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme';
 import { Paths } from '@/navigation/paths';
 
-import { Startup, Todo } from '@/screens';
+import { Startup, TodoRTK } from '@/screens';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -19,7 +19,8 @@ function ApplicationNavigator() {
       <NavigationContainer theme={navigationTheme}>
         <Stack.Navigator key={variant} screenOptions={{ headerShown: false }}>
           <Stack.Screen component={Startup} name={Paths.Startup} />
-          <Stack.Screen component={Todo} name={Paths.Todo} />
+          <Stack.Screen component={TodoRTK} name={Paths.TodoRTK} />
+
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
