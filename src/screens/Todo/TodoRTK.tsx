@@ -5,7 +5,7 @@ import { SafeScreen } from '@/components/templates'
 import { useTheme } from '@/theme';
 import { IconByVariant } from '@/components/atoms';
 
-import { useGetTodosQuery } from '@/store/todoApi';
+import { useGetTodosQuery, useAddTodoMutation } from '@/store/todoApi';
 
 import { LogBox } from 'react-native';
 LogBox.ignoreAllLogs(); //Ignore all log notifications
@@ -13,15 +13,27 @@ LogBox.ignoreAllLogs(); //Ignore all log notifications
 function TodoRTK() {
   const { layout, gutters, fonts, colors, borders
   } = useTheme();
-
   const deviceWidth = Dimensions.get('window').width;
-  const { data, error, isLoading, refetch } = useGetTodosQuery();
-
-  // const todos = useSelector(state => state.todos.todoList);
-  // const loading = useSelector(state => state.todos.loading);
-
-  // const dispatch = useDispatch();
+  
+  let { data, error, isLoading, refetch } = useGetTodosQuery();
+  const [ addTodo ] = useAddTodoMutation();
   const [newTodo, setNewTodo] = React.useState('');
+
+  if (error) {
+    console.error('error', error);
+  }
+
+  async function addNewTodo() {
+    await addTodo({
+      userId: 1, 
+      title: newTodo, 
+      completed: true
+    })
+      .then(res => console.log(res.data))
+      .catch(err => console.error(err));
+    await refetch();
+    setNewTodo('');
+  }
 
   function renderItem(props: any) {
     const { item } = props
@@ -161,14 +173,7 @@ function TodoRTK() {
             {isLoading ? (
               <ActivityIndicator size="small" color={colors.gray400} />
             ) : (
-              <TouchableOpacity onPress={() => {
-                // dispatch(createTodos({
-                //   userId: 1, 
-                //   title: newTodo, 
-                //   completed: true
-                // }));
-                setNewTodo('');
-              }} style={[
+              <TouchableOpacity onPress={addNewTodo} style={[
                 layout.itemsCenter
               ]}>
                 <IconByVariant path={'add'} stroke={colors.gray400} />
