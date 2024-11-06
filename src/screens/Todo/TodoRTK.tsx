@@ -5,7 +5,7 @@ import { SafeScreen } from '@/components/templates'
 import { useTheme } from '@/theme';
 import { IconByVariant } from '@/components/atoms';
 
-import { useGetTodosQuery, useAddTodoMutation } from '@/store/todoApi';
+import { useGetTodosQuery, useAddTodoMutation, useDeleteTodoMutation } from '@/store/todoApi';
 
 import { LogBox } from 'react-native';
 LogBox.ignoreAllLogs(); //Ignore all log notifications
@@ -17,6 +17,7 @@ function TodoRTK() {
   
   let { data, error, isLoading, refetch } = useGetTodosQuery();
   const [ addTodo ] = useAddTodoMutation();
+  const [ deleteTodo ] = useDeleteTodoMutation();
   const [newTodo, setNewTodo] = React.useState('');
 
   if (error) {
@@ -33,6 +34,13 @@ function TodoRTK() {
       .catch(err => console.error(err));
     await refetch();
     setNewTodo('');
+  }
+
+  async function deleteSelectedTodo(id: number) {
+    await deleteTodo(id)
+      .then(res => console.log(res.data))
+      .catch(err => console.error(err));
+    await refetch();
   }
 
   function renderItem(props: any) {
@@ -67,7 +75,7 @@ function TodoRTK() {
                 <IconByVariant path={'update'} stroke={colors.gray400} />
               </TouchableOpacity>
               <TouchableOpacity onPress={() => {
-                // dispatch(deleteTodos(item.id));
+                deleteSelectedTodo(item.id);
               }}>
                 <IconByVariant path={'delete'} stroke={colors.red500} />
               </TouchableOpacity>
