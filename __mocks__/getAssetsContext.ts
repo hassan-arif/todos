@@ -4,7 +4,7 @@ jest.mock('@/theme/assets/getAssetsContext', () =>
   jest.fn((type: AssetType) => {
     const context = (key: string) => {
       if (type === 'images') {
-        return jest.mock('@/theme/assets/images/tom.png');
+        return jest.mock('@/theme/assets/images/tick.png');
       }
       if (type === 'icons') {
         return jest.mock('@/theme/assets/icons/send.svg');
@@ -14,7 +14,7 @@ jest.mock('@/theme/assets/getAssetsContext', () =>
 
     context.keys = () => {
       if (type === 'images') {
-        return ['images/tom.png'];
+        return ['images/tick.png'];
       }
       if (type === 'icons') {
         return ['icons/send.svg'];

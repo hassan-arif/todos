@@ -39,10 +39,11 @@ function Startup({ navigation }: RootScreenProps<Paths.Startup>) {
           layout.col,
           layout.itemsCenter,
           layout.justifyCenter,
+          {backgroundColor: 'black'}
         ]}
       >
         <AssetByVariant
-          path={'tom'}
+          path={'tick'}
           resizeMode={'contain'}
           style={{ height: 300, width: 300 }}
         />
