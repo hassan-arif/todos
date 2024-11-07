@@ -2,21 +2,21 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const todoApi = createApi({
   reducerPath: 'todoApi',
-  baseQuery: fetchBaseQuery({ baseUrl: process.env.API_URL + '/todos' }),
+  baseQuery: fetchBaseQuery({ baseUrl: process.env.LOCAL_API_URL }),
   endpoints: (builder) => ({
     getTodos: builder.query({
-      query: () => '/',
+      query: () => '/todos',
     }),
     addTodo: builder.mutation({
       query: (data) => ({
-        url: '/',
+        url: '/todos',
         method: 'POST',
         body: data
       }),
     }),
     deleteTodo: builder.mutation({
       query: (id) => ({
-        url: `/${id}`,
+        url: `/todos/${id}`,
         method: 'DELETE'
       }),
     }),
