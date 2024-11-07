@@ -6,6 +6,7 @@ export type RootStackParamList = {
   [Paths.Example]: undefined;
   [Paths.Todo]: undefined;
   [Paths.TodoRTK]: undefined;
+  [Paths.Home]: undefined;
 };
 
 export type RootScreenProps<

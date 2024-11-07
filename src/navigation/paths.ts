@@ -3,4 +3,5 @@ export const enum Paths {
   Startup = 'startup',
   Todo = 'todo',
   TodoRTK = 'todoRTK',
+  Home = 'home',
 }
