@@ -23,9 +23,8 @@ function Home() {
 
   async function addNewTodo() {
     await addTodo({
-      userId: 1, 
-      title: newTodo, 
-      completed: true
+      description: newTodo,
+      isDone: false
     })
       .then(res => console.log(res.data))
       .catch(err => console.error(err));
@@ -42,13 +41,13 @@ function Home() {
 
   function renderItem(props: any) {
     const { item } = props
-    let listItem = item.title
+    let listItem = item.description
 
     return (
       <View style={[ 
         gutters.marginBottom_12
       ]}>
-        {item.completed ? (
+        {/* {item.completed ? ( */}
           <View style={[
             layout.row, 
             layout.justifyBetween, 
@@ -58,7 +57,7 @@ function Home() {
               fonts.gray200, 
               fonts.size_16,
               {width: '85%'}
-            ]}>{item.title}</Text>
+            ]}>{item.description}</Text>
 
             <View style={[layout.row]}>
               <TouchableOpacity onPress={() => {
@@ -79,7 +78,7 @@ function Home() {
             </View>
           </View>
 
-        ) : (
+        {/* ) : (
 
           <View style={[
             borders.rounded_16,
@@ -118,7 +117,7 @@ function Home() {
               </TouchableOpacity>
             </View>
           </View>
-        )}
+        )} */}
       </View>
     )
   }
