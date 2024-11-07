@@ -11,6 +11,10 @@ import '@/translations';
 import { Provider } from 'react-redux';
 import { store } from '@/store/index';
 
+// Ignore all log notifications on emulator
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs();
+
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
