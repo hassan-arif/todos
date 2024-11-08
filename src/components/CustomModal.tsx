@@ -10,6 +10,8 @@ interface CustomModalProps {
 
   headerText: string;
   defaultTodo: string;
+
+  addTodo: (todo: string) => void;
 }
 
 export default function CustomModal(props: CustomModalProps) {
@@ -44,15 +46,25 @@ export default function CustomModal(props: CustomModalProps) {
           autoFocus={true}
         />
 
-        <View style={styles.footer}>
-          <TouchableOpacity style={styles.footerFooter} onPress={() => {}}>
-            <Text style={styles.footerButton}>Delete</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.footerFooter} onPress={() => {}}>
-            <Text style={styles.footerButton}>Save</Text>
-          </TouchableOpacity>
-        </View>
-
+        { !props.isCreate ? 
+          <View style={styles.footer}>
+            <TouchableOpacity style={styles.footerFooter} onPress={() => {}}>
+              <Text style={styles.footerButton}>Delete</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.footerFooter} onPress={() => {}}>
+              <Text style={styles.footerButton}>Update</Text>
+            </TouchableOpacity>
+          </View>
+        : <View style={styles.footer}>
+            <TouchableOpacity style={styles.footerFooter} onPress={() => {
+              props.addTodo(newTodo)
+              setNewTodo('')
+              props.toggleVisibility()
+            }}>
+              <Text style={styles.footerButton}>Add</Text>
+            </TouchableOpacity>
+          </View>
+        }
       </View>
     </Modal>
   );

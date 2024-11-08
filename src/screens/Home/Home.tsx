@@ -1,35 +1,42 @@
 import React from 'react'
-import { Dimensions, Text, TouchableOpacity, View, ActivityIndicator } from 'react-native';
+import { Dimensions, Text, TouchableOpacity, View, ActivityIndicator, Button, StyleSheet } from 'react-native';
 import { FlatList, TextInput } from 'react-native-gesture-handler';
 import { SafeScreen } from '@/components/templates'
 import { useTheme } from '@/theme';
 import { IconByVariant } from '@/components/atoms';
 
 import { useGetTodosQuery, useAddTodoMutation, useDeleteTodoMutation } from '@/store/todoApi';
+import Header from '@/components/Header';
+import CustomModal from '@/components/CustomModal';
+import CustomButton from '@/components/CustomButton';
 
-function Home() {
+const deviceWidth = Dimensions.get('window').width;
+
+export default function Home() {
   const { layout, gutters, fonts, colors, borders
   } = useTheme();
-  const deviceWidth = Dimensions.get('window').width;
   
   let { data, error, isLoading, refetch } = useGetTodosQuery();
   const [ addTodo ] = useAddTodoMutation();
   const [ deleteTodo ] = useDeleteTodoMutation();
-  const [newTodo, setNewTodo] = React.useState('');
+  const [isModalVisible, setModalVisible] = React.useState(false);
 
   if (error) {
     console.error('error', error);
   }
 
-  async function addNewTodo() {
+  // Handles onPress on create todo (plus) button. This toggles the visibility of the modal (isModalVisible state).
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
+  async function addNewTodo(todo: string) {
     await addTodo({
-      description: newTodo,
+      description: todo,
       isDone: false
     })
       .then(res => console.log(res.data))
       .catch(err => console.error(err));
-    await refetch();
-    setNewTodo('');
   }
 
   async function deleteSelectedTodo(id: number) {
@@ -141,53 +148,69 @@ function Home() {
             keyExtractor={item => item.id}
           />
         </View>
-        <View style={[
-          layout.absolute,
-          {
-            bottom:30, 
-            flex: 1, 
-            width: deviceWidth
-          }
-        ]}>
-          <View style={[
-            borders.rounded_16, 
-            layout.row,
-            layout.justifyBetween,
-            {
-              marginLeft: 6, 
-              marginRight: 6, 
-              paddingLeft: 6, 
-              paddingRight: 10, 
-              alignItems: 'center', 
-              backgroundColor: '#2c2c2c'
-            }
-          ]}>
-            <TextInput
-              style={[
-                fonts.gray200, 
-                fonts.size_16, 
-              ]}
-              defaultValue={newTodo}
-              placeholder="Add new todo"
-              placeholderTextColor={colors.gray200}
-              onChangeText={(text) => {setNewTodo(text)}}
-              autoFocus = {true}
-              editable = {!isLoading}
+        {isModalVisible ? (
+          <CustomModal 
+            isCreate={true}
+            isVisible={isModalVisible} 
+            toggleVisibility={toggleModal}
+
+            headerText='Add New Item'
+            defaultTodo=''
+
+            addTodo={addNewTodo}
+          />
+
+          //   <View style={{ margin: 20, backgroundColor:'white'}}>
+          //     <Text>Hello!</Text>
+          //     <TextInput
+          //       style={[
+          //         fonts.gray200, 
+          //         fonts.size_16, 
+          //       ]}
+          //       defaultValue={newTodo}
+          //       placeholder="Add new todo"
+          //       placeholderTextColor={colors.gray200}
+          //       onChangeText={(text) => {setNewTodo(text)}}
+          //       autoFocus = {true}
+          //     />
+
+          //     {isLoading ? (
+          //       <ActivityIndicator size="small" color={colors.gray400} />
+          //     ) : (
+          //       <TouchableOpacity onPress={() => {
+          //         addNewTodo()
+          //         toggleModal()
+          //       }} style={[
+          //         layout.itemsCenter
+          //       ]}>
+          //         <IconByVariant path={'create'} width={64} height={64} />
+          //       </TouchableOpacity>
+          //     )}
+    
+          //     <Button title="Hide modal" onPress={toggleModal} />
+          //   </View>
+          // </Modal>
+        ): null}
+        {!isModalVisible ? 
+          <View style={styles.createButton}>
+            <CustomButton
+              isLoading={isLoading} 
+              onPress={toggleModal} 
+              path='create' 
+              size={64}
             />
-            {isLoading ? (
-              <ActivityIndicator size="small" color={colors.gray400} />
-            ) : (
-              <TouchableOpacity onPress={addNewTodo} style={[
-                layout.itemsCenter
-              ]}>
-                <IconByVariant path={'add'} stroke={colors.gray400} />
-              </TouchableOpacity>
-            )}
           </View>
-        </View>
+        : null}
       </View>
     </SafeScreen>
   )
 }
 
-export default Home
+const styles = StyleSheet.create({
+  createButton: {
+    position: 'absolute',
+    bottom: 0,
+    alignItems: 'center',
+    width: deviceWidth
+  }
+})
