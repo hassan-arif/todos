@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dimensions, Text, TouchableOpacity, View, StyleSheet } from 'react-native';
+import { Dimensions, View, StyleSheet } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { SafeScreen } from '@/components/templates'
 import { useTheme } from '@/theme';
@@ -17,7 +17,7 @@ export default function Home() {
   const { layout, gutters, fonts, colors
   } = useTheme();
   
-  let { data, error, isLoading, refetch } = useGetTodosQuery();
+  let { data, error, isLoading, refetch } = useGetTodosQuery({});
   const [ addTodo ] = useAddTodoMutation();
   const [ deleteTodo ] = useDeleteTodoMutation();
   const [isModalVisible, setModalVisible] = React.useState(false);
@@ -26,7 +26,6 @@ export default function Home() {
     console.error('error', error);
   }
 
-  // Handles onPress on create todo (plus) button. This toggles the visibility of the modal (isModalVisible state).
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
@@ -36,13 +35,13 @@ export default function Home() {
       description: todo,
       isDone: false
     })
-      .then(res => console.log(res.data))
+      .then(res => console.log(res?.data))
       .catch(err => console.error(err));
   }
 
   async function deleteSelectedTodo(id: number) {
     await deleteTodo(id)
-      .then(res => console.log(res.data))
+      .then(res => console.log(res?.data))
       .catch(err => console.error(err));
   }
 
@@ -147,8 +146,6 @@ export default function Home() {
           />
         </View>
         
-        {
-          !isModalVisible && 
           <View style={styles.createButton}>
             <CustomButton
               isLoading={isLoading} 
@@ -157,7 +154,6 @@ export default function Home() {
               size={64}
             />
           </View>
-        }
         
       </View>
 
@@ -176,6 +172,7 @@ export default function Home() {
   )
 }
 
+const deviceWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   container: {
     height: '100%',

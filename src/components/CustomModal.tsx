@@ -32,7 +32,7 @@ export default function CustomModal(props: CustomModalProps) {
       <View style={styles.outer}>
 
         <View style={styles.header}>
-          <Text style={styles.headerText}>Add New Item</Text>
+          <Text style={styles.headerText}>{props.headerText}</Text>
           <TouchableOpacity onPress={props.toggleVisibility}>
             <IconByVariant path={'close'} />
           </TouchableOpacity>
@@ -41,7 +41,7 @@ export default function CustomModal(props: CustomModalProps) {
         <TextInput
           style={styles.input}
           placeholder="new item"
-          defaultValue={newTodo}
+          defaultValue={props.defaultTodo}
           onChangeText={(text) => {setNewTodo(text)}}
           autoFocus={true}
         />

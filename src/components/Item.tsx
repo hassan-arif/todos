@@ -29,18 +29,19 @@ export default function Item(props: ItemProps) {
   )
 }
 
+const deviceWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 14,
-    marginRight: 22,
   },
   text: {
     fontSize: 22,
     color: 'gray',
     paddingBottom: 4,
     marginLeft: 8,
+    width: deviceWidth - 80,
   },
   strikethrough: {
     textDecorationLine: 'line-through'
