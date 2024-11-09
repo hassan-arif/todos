@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 
 interface ItemProps {
@@ -16,7 +16,15 @@ export default function Item(props: ItemProps) {
         onValueChange={() => {}}
         tintColors={{ true: '#8687E7', false: 'gray' }}
       />
+      <TouchableOpacity onPress={() => {}}>
+        {
+          props.isDone ? (
+            <Text style={[styles.text, styles.strikethrough]}>{props.description}</Text>
+          ) : (
       <Text style={styles.text}>{props.description}</Text>
+          )
+        }
+      </TouchableOpacity>
     </View>
   )
 }
@@ -33,5 +41,8 @@ const styles = StyleSheet.create({
     color: 'gray',
     paddingBottom: 4,
     marginLeft: 8,
+  },
+  strikethrough: {
+    textDecorationLine: 'line-through'
   }
 })
