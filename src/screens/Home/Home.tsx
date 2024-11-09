@@ -131,14 +131,8 @@ export default function Home() {
 
   return (
     <SafeScreen>
-      <View
-        style={[
-          layout.fullHeight,
-          gutters.paddingHorizontal_12,
-          { backgroundColor: 'black' },
-        ]}
-      >
-        <View>
+      <View style={styles.container}>
+
           <Header
             count={data?.length}
             isLoading={isLoading}
@@ -183,6 +177,11 @@ export default function Home() {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    height: '100%',
+    backgroundColor: 'black',
+    paddingHorizontal: 12,
+  },
   createButton: {
     position: 'absolute',
     bottom: 0,
