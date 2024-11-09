@@ -145,7 +145,7 @@ export default function Home() {
           />
         
           <FlatList
-            style={{marginBottom: 170}}
+          style={{marginBottom: 85}}
             data={data}
             renderItem={renderItem}
             keyExtractor={item => item.id}

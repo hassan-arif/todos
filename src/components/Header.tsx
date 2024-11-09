@@ -37,12 +37,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginTop: 4,
   },
   headerText: {
     fontSize: 40,
     fontWeight: 'bold',
     color: 'gray',
-    marginTop: 16,
-    marginBottom: 16,
+    marginVertical: 16
   },
 });
