@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerText: {
-    fontSize: 32,
+    fontSize: 40,
     fontWeight: 'bold',
     color: 'gray',
     marginTop: 16,

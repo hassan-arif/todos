@@ -83,16 +83,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerText: {
-    marginLeft: 16,
-    fontSize: 24,
+    marginLeft: 20,
+    fontSize: 28,
     fontWeight: 'bold',
   },
 
   input: {
-    fontSize: 16,
+    fontSize: 20,
     borderRadius: 16,
     backgroundColor: '#111111',
-    paddingLeft: 16,
+    paddingLeft: 20,
     paddingRight: 16,
     marginTop: 16,
     marginBottom: 24,
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   footerButton: {
-    fontSize: 20,
+    fontSize: 22,
     backgroundColor: '#8687E7',
     textAlign: 'center',
     paddingTop: 8,
