@@ -163,18 +163,20 @@ export default function Home() {
             />
           </View>
         }
-
-        <CustomModal 
-          isCreate={true}
-          isVisible={isModalVisible} 
-          toggleVisibility={toggleModal}
-
-          headerText='Add New Item'
-          defaultTodo=''
-
-          addTodo={addNewTodo}
-        />
+        
       </View>
+
+      <CustomModal 
+        isCreate={true}
+        isVisible={isModalVisible} 
+        toggleVisibility={toggleModal}
+
+        headerText='Add New Item'
+        defaultTodo=''
+
+        addTodo={addNewTodo}
+      />
+
     </SafeScreen>
   )
 }
