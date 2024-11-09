@@ -134,8 +134,12 @@ export default function Home() {
       <CustomModal 
         isCreate={isCreate}
         isVisible={isModalVisible} 
-        toggleVisibility={toggleModal}
-
+        toggleVisibility={() => {
+          setId(-1)
+          setDescription('')
+          setHeaderText('')
+          toggleModal()
+        }}
         headerText={headerText}
         id={id}
         defaultTodo={description}

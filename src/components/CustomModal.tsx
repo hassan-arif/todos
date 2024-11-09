@@ -27,7 +27,7 @@ export default function CustomModal(props: CustomModalProps) {
    * CustomModal component is a modal that is used to add or update a todo item.
    * @param {boolean} isVisible - Determines if the modal is visible.
    * @param {boolean} isCreate - Determines if the modal is for creating a new item.
-   * @param {function} toggleVisibility - Toggles the visibility of the modal.
+   * @param {function} toggleVisibility - Toggles the visibility of the modal. Also clears id, description, and headerText.
    * @param {string} headerText - Determines the header text of the modal.
    * @param {number} id - Determines the id of the todo item.
    * @param {string} defaultTodo - Determines the default todo item description.
@@ -39,17 +39,26 @@ export default function CustomModal(props: CustomModalProps) {
 
   const [newTodo, setNewTodo] = React.useState(props.defaultTodo);
 
+  function clear() {
+    /**
+     * clear function is used to clear the input field and toggle the visibility of the modal.
+     * @returns {void}
+     */
+    setNewTodo('')
+    props.toggleVisibility()
+  }
+
   return (
     <Modal
       isVisible={props.isVisible}
-      onBackdropPress={props.toggleVisibility}
-      onBackButtonPress={props.toggleVisibility}
+      onBackdropPress={clear}
+      onBackButtonPress={clear}
     >
       <View style={styles.outer}>
 
         <View style={styles.header}>
           <Text style={styles.headerText}>{props.headerText}</Text>
-          <TouchableOpacity onPress={props.toggleVisibility}>
+          <TouchableOpacity onPress={clear}>
             <IconByVariant path={'close'} />
           </TouchableOpacity>
         </View>
@@ -66,8 +75,7 @@ export default function CustomModal(props: CustomModalProps) {
           <View style={styles.footer}>
             <TouchableOpacity style={styles.footerFooter} onPress={() => {
               props.deleteTodo(props.id)
-              setNewTodo('')
-              props.toggleVisibility()
+              clear()
             }}>
               <Text style={styles.footerButton}>Delete</Text>
             </TouchableOpacity>
@@ -76,8 +84,7 @@ export default function CustomModal(props: CustomModalProps) {
                 id: props.id,
                 description: newTodo
               })
-              setNewTodo('')
-              props.toggleVisibility()
+              clear()
             }}>
               <Text style={styles.footerButton}>Update</Text>
             </TouchableOpacity>
@@ -85,8 +92,7 @@ export default function CustomModal(props: CustomModalProps) {
         : <View style={styles.footer}>
             <TouchableOpacity style={styles.footerFooter} onPress={() => {
               props.addTodo(newTodo)
-              setNewTodo('')
-              props.toggleVisibility()
+              clear()
             }}>
               <Text style={styles.footerButton}>Add</Text>
             </TouchableOpacity>
