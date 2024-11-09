@@ -9,6 +9,7 @@ import { useGetTodosQuery, useAddTodoMutation, useDeleteTodoMutation } from '@/s
 import Header from '@/components/Header';
 import CustomModal from '@/components/CustomModal';
 import CustomButton from '@/components/CustomButton';
+import Item from '@/components/Item';
 
 const deviceWidth = Dimensions.get('window').width;
 
@@ -147,7 +148,7 @@ export default function Home() {
           <FlatList
           style={{marginBottom: 85}}
             data={data}
-            renderItem={renderItem}
+          renderItem={({ item }) => <Item {...item} />}
             keyExtractor={item => item.id}
           />
         </View>
