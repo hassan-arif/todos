@@ -1,26 +1,48 @@
-import { useTheme } from "@/theme";
-import { Text } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+import CustomButton from "./CustomButton";
 
-export default function Header(props: { count: number }) {
+interface HeaderProps {
+  count: number;
+  isLoading: boolean;
+  refetch: () => void;
+}
+
+export default function Header(props: HeaderProps) {
   /**
-   * Header component is a simple component that displays the title of the app and the count of tasks.
-   * It receives tasks' count.
+   * Header component is a header that displays the title of the app and a refresh button.
+   * It receives count, isLoading, and refetch.
+   * count is a number that determines the number of tasks in the list. isLoading is a boolean that determines if the refresh button should be a loading spinner. refetch is a function that is called when the refresh button is pressed.
    */
 
-  const { gutters, fonts
-  } = useTheme();
+  return ( 
+    <View style={styles.header}>
 
-  if (!props.count) {
-    return (
-      <Text style={[
-        fonts.size_32, fonts.gray200, fonts.bold, gutters.marginTop_16, gutters.marginBottom_16
-      ]}>Task List</Text>
-    )
-  }
+      <Text style={styles.headerText}>
+        {props.count ? `Task List ${props.count}` : 'Task List'}
+      </Text>
 
-  return (
-    <Text style={[
-      fonts.size_32, fonts.gray200, fonts.bold, gutters.marginTop_16, gutters.marginBottom_16
-    ]}>Task List {props.count}</Text>
+      <CustomButton
+        isLoading={props.isLoading}
+        onPress={props.refetch}
+        path={'refresh'}
+        size={26}
+      />
+
+    </View>
   )
 }
+
+const styles = StyleSheet.create({
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  headerText: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: 'gray',
+    marginTop: 16,
+    marginBottom: 16,
+  },
+});

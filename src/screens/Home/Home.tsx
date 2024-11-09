@@ -43,7 +43,6 @@ export default function Home() {
     await deleteTodo(id)
       .then(res => console.log(res.data))
       .catch(err => console.error(err));
-    await refetch();
   }
 
   function renderItem(props: any) {
@@ -139,7 +138,11 @@ export default function Home() {
         ]}
       >
         <View>
-          <Header count={data?.length} />
+          <Header
+            count={data?.length}
+            isLoading={isLoading}
+            refetch={refetch}  
+          />
         
           <FlatList
             style={{marginBottom: 180}}
