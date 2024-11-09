@@ -20,6 +20,19 @@ interface ItemProps {
 }
 
 export default function Item(props: ItemProps) {
+  /**
+   * Item component is a list item that displays a checkbox and a description.
+   * @param {number} id - The id of the todo item.
+   * @param {boolean} isDone - The checkbox value of the todo item.
+   * @param {string} description - The description of the todo item.
+   * @param {function} setCreate - Sets the create status of the modal.
+   * @param {function} toggleModal - Toggles the visibility of the modal.
+   * @param {function} setId - Sets the id of the todo item.
+   * @param {function} setDescription - Sets the description of the todo item.
+   * @param {function} setHeaderText - Sets the header text of the modal.
+   * @param {function} updateTodoCheckbox - Updates the checkbox value of the todo item.
+   * @returns {JSX.Element}
+   */
   return (
     <View style={styles.container}>
       <CheckBox

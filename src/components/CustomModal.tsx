@@ -24,9 +24,17 @@ interface CustomModalProps {
 
 export default function CustomModal(props: CustomModalProps) {
   /**
-   * CustomModal component is a modal that can be used for creating or updating an item.
-   * For creating, it receives ...
-   * Else it receives ...
+   * CustomModal component is a modal that is used to add or update a todo item.
+   * @param {boolean} isVisible - Determines if the modal is visible.
+   * @param {boolean} isCreate - Determines if the modal is for creating a new item.
+   * @param {function} toggleVisibility - Toggles the visibility of the modal.
+   * @param {string} headerText - Determines the header text of the modal.
+   * @param {number} id - Determines the id of the todo item.
+   * @param {string} defaultTodo - Determines the default todo item description.
+   * @param {function} addTodo - Adds a new todo item.
+   * @param {function} deleteTodo - Deletes a todo item.
+   * @param {function} updateTodoDescription - Updates the description of a todo item.
+   * @returns {JSX.Element}
    */
 
   const [newTodo, setNewTodo] = React.useState(props.defaultTodo);

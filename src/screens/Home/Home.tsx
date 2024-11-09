@@ -10,8 +10,19 @@ import CustomButton from '@/components/CustomButton';
 import Item from '@/components/Item';
 
 export default function Home() {
+  /**
+   * Home screen is the main screen of the app.
+   * It fetches the todos from the API and displays them in a list.
+   * It also has a button to create a new todo item.
+   * It uses the Header, CustomModal, CustomButton, and Item components.
+   * It uses the useGetTodosQuery, useAddTodoMutation, useDeleteTodoMutation, and useUpdateTodoMutation hooks.
+   * It uses the addNewTodo, deleteSelectedTodo, updateSelectedTodoDescription, and updateSelectedTodoCheckbox functions.
+   * It uses the isCreate, isModalVisible, headerText, id, and description states.
+   * It uses the toggleModal function.
+   * @returns {JSX.Element}
+   */
   
-  let { data, error, isLoading, refetch } = useGetTodosQuery({});
+  let { data, isLoading, refetch } = useGetTodosQuery({});
   const [ addTodo ] = useAddTodoMutation();
   const [ deleteTodo ] = useDeleteTodoMutation();
   const [ updateTodo ] = useUpdateTodoMutation();
@@ -22,15 +33,20 @@ export default function Home() {
   const [ id, setId ] = React.useState(-1);
   const [ description, setDescription ] = React.useState('');
 
-  if (error) {
-    console.error('error', error);
-  }
-
   const toggleModal = () => {
+    /**
+     * toggleModal function is used to toggle the visibility of the modal.
+     * @returns {void}
+     */
     setModalVisible(!isModalVisible);
   };
 
   async function addNewTodo(todo: string) {
+    /**
+     * addNewTodo function is used to add a new todo item to the list.
+     * @param {string} todo - The description of the todo item to add.
+     * @returns {void}
+     */
     await addTodo({
       description: todo,
       isDone: false
@@ -40,18 +56,35 @@ export default function Home() {
   }
 
   async function deleteSelectedTodo(id: number) {
+    /**
+     * deleteSelectedTodo function is used to delete a todo item from the list.
+     * @param {number} id - The id of the todo item to delete.
+     * @returns {void}
+     */
     await deleteTodo(id)
       .then(res => console.log(res?.data))
       .catch(err => console.error(err));
   }
 
   async function updateSelectedTodoDescription({ id, description }: { id: number, description: string }) {
+    /**
+     * updateSelectedTodoDescription function is used to update the description of a todo item.
+     * @param {number} id - The id of the todo item to update.
+     * @param {string} description - The new description of the todo item.
+     * @returns {void}
+     */
     await updateTodo({ id, description })
       .then(res => console.log(res?.data))
       .catch(err => console.error(err));
   }
 
   async function updateSelectedTodoCheckbox({ id, isDone }: { id: number, isDone: boolean }) {
+    /**
+     * updateSelectedTodoCheckbox function is used to update the checkbox of a todo item.
+     * @param {number} id - The id of the todo item to update.
+     * @param {boolean} isDone - The new checkbox value of the todo item.
+     * @returns {void}
+     */
     await updateTodo({ id, isDone })
       .then(res => console.log(res?.data))
       .catch(err => console.error(err));

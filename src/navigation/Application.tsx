@@ -20,7 +20,6 @@ function ApplicationNavigator() {
         <Stack.Navigator key={variant} screenOptions={{ headerShown: false }}>
           <Stack.Screen component={Startup} name={Paths.Startup} />
           <Stack.Screen component={Home} name={Paths.Home} />
-
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

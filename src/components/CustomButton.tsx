@@ -11,9 +11,12 @@ interface BtnProps {
 
 export default function CustomButton(props: BtnProps) {
   /**
-   * CustomButton component is a button that is either a loading spinner or an icon.
-   * It receives isLoading, onPress, path, and size.
-   * isLoading is a boolean that determines if the button should be a loading spinner. onPress is a function that is called when the button is pressed. path is a string that determines the icon to display. size is a number that determines the size of the icon.
+   * CustomButton component is a button that displays an icon.
+   * @param {boolean} isLoading - Determines if the button is in a loading state.
+   * @param {function} onPress - Function to execute when the button is pressed.
+   * @param {string} path - Determines the icon to display.
+   * @param {number} size - Determines the size of the icon.
+   * @returns {JSX.Element}
    */
 
   const { colors 

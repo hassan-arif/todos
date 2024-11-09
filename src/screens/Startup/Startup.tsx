@@ -12,6 +12,11 @@ import { AssetByVariant } from '@/components/atoms';
 import { SafeScreen } from '@/components/templates';
 
 function Startup({ navigation }: RootScreenProps<Paths.Startup>) {
+  /**
+   * Startup screen is the first screen of the app.
+   * @param {object} navigation - The navigation object provided by the navigator.
+   * @returns {JSX.Element}
+   */
   const { layout, gutters, fonts } = useTheme();
   const { t } = useTranslation();
 
