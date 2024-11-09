@@ -56,10 +56,21 @@ export default function CustomModal(props: CustomModalProps) {
 
         { !props.isCreate ? 
           <View style={styles.footer}>
-            <TouchableOpacity style={styles.footerFooter} onPress={() => {}}>
+            <TouchableOpacity style={styles.footerFooter} onPress={() => {
+              props.deleteTodo(props.id)
+              setNewTodo('')
+              props.toggleVisibility()
+            }}>
               <Text style={styles.footerButton}>Delete</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.footerFooter} onPress={() => {}}>
+            <TouchableOpacity style={styles.footerFooter} onPress={() => {
+              props.updateTodoDescription({
+                id: props.id,
+                description: newTodo
+              })
+              setNewTodo('')
+              props.toggleVisibility()
+            }}>
               <Text style={styles.footerButton}>Update</Text>
             </TouchableOpacity>
           </View>

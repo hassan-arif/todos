@@ -25,15 +25,26 @@ export default function Item(props: ItemProps) {
       <CheckBox
         value={props.isDone}
         disabled={false}
-        onValueChange={() => {}}
+        onValueChange={() => {
+          props.updateTodoCheckbox({
+            id: props.id, 
+            isDone: !props.isDone
+          })
+        }}
         tintColors={{ true: '#8687E7', false: 'gray' }}
       />
-      <TouchableOpacity onPress={() => {}}>
+      <TouchableOpacity onPress={() => {
+        props.setCreate(false)
+        props.setId(props.id)
+        props.setDescription(props.description)
+        props.setHeaderText('Update Item')
+        props.toggleModal()
+      }}>
         {
           props.isDone ? (
             <Text style={[styles.text, styles.strikethrough]}>{props.description}</Text>
           ) : (
-      <Text style={styles.text}>{props.description}</Text>
+            <Text style={styles.text}>{props.description}</Text>
           )
         }
       </TouchableOpacity>

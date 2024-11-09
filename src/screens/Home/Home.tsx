@@ -61,40 +61,54 @@ export default function Home() {
     <SafeScreen>
       <View style={styles.container}>
 
-          <Header
-            count={data?.length}
-            isLoading={isLoading}
-            refetch={refetch}  
-          />
-        
-          <FlatList
+        <Header
+          count={data?.length}
+          isLoading={isLoading}
+          refetch={refetch}  
+        />
+      
+        <FlatList
           style={{marginBottom: 85}}
-            data={data}
-          renderItem={({ item }) => <Item {...item} />}
-            keyExtractor={item => item.id}
+          data={data}
+          renderItem={({ item }) => <Item 
+            {...item}
+
+            setCreate={setIsCreate}
+            toggleModal={toggleModal}
+            setId={setId}
+            setDescription={setDescription}
+            setHeaderText={setHeaderText}
+            updateTodoCheckbox={updateSelectedTodoCheckbox}
+          />}
+          keyExtractor={item => item.id}
+        />
+        
+        <View style={styles.createButton}>
+          <CustomButton
+            isLoading={isLoading} 
+            onPress={() => {
+              setIsCreate(true)
+              setHeaderText('Create New Item')
+              toggleModal()
+            }} 
+            path='create' 
+            size={64}
           />
         </View>
-        
-          <View style={styles.createButton}>
-            <CustomButton
-              isLoading={isLoading} 
-              onPress={toggleModal} 
-              path='create' 
-              size={64}
-            />
-          </View>
-        
+
       </View>
 
       <CustomModal 
-        isCreate={true}
+        isCreate={isCreate}
         isVisible={isModalVisible} 
         toggleVisibility={toggleModal}
 
-        headerText='Add New Item'
-        defaultTodo=''
-
+        headerText={headerText}
+        id={id}
+        defaultTodo={description}
         addTodo={addNewTodo}
+        deleteTodo={deleteSelectedTodo}
+        updateTodoDescription={updateSelectedTodoDescription}
       />
 
     </SafeScreen>
