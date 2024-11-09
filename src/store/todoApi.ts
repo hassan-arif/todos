@@ -14,6 +14,16 @@ export const todoApi = createApi({
         body: data
       }),
     }),
+    updateTodo: builder.mutation({
+      query(data) {
+        const { id, ...body } = data;
+        return {
+          url: `/todos/${id}`,
+          method: 'PATCH',
+          body: body
+        }
+      },
+    }),
     deleteTodo: builder.mutation({
       query: (id) => ({
         url: `/todos/${id}`,
@@ -22,4 +32,4 @@ export const todoApi = createApi({
     }),
   }),
 })
-export const { useGetTodosQuery, useAddTodoMutation, useDeleteTodoMutation } = todoApi;
+export const { useGetTodosQuery, useAddTodoMutation, useDeleteTodoMutation, useUpdateTodoMutation } = todoApi;

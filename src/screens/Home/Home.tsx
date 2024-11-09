@@ -2,20 +2,14 @@ import React from 'react'
 import { Dimensions, View, StyleSheet } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { SafeScreen } from '@/components/templates'
-import { useTheme } from '@/theme';
-import { IconByVariant } from '@/components/atoms';
 
-import { useGetTodosQuery, useAddTodoMutation, useDeleteTodoMutation } from '@/store/todoApi';
+import { useGetTodosQuery, useAddTodoMutation, useDeleteTodoMutation, useUpdateTodoMutation } from '@/store/todoApi';
 import Header from '@/components/Header';
 import CustomModal from '@/components/CustomModal';
 import CustomButton from '@/components/CustomButton';
 import Item from '@/components/Item';
 
-const deviceWidth = Dimensions.get('window').width;
-
 export default function Home() {
-  const { layout, gutters, fonts, colors
-  } = useTheme();
   
   let { data, error, isLoading, refetch } = useGetTodosQuery({});
   const [ addTodo ] = useAddTodoMutation();
@@ -45,87 +39,16 @@ export default function Home() {
       .catch(err => console.error(err));
   }
 
-  function renderItem(props: any) {
-    const { item } = props
-    let listItem = item.description
+  async function updateSelectedTodoDescription({ id, description }: { id: number, description: string }) {
+    await updateTodo({ id, description })
+      .then(res => console.log(res?.data))
+      .catch(err => console.error(err));
+  }
 
-    return (
-      <View style={[ 
-        gutters.marginBottom_12
-      ]}>
-        {/* {item.completed ? ( */}
-          <View style={[
-            layout.row, 
-            layout.justifyBetween, 
-            gutters.paddingTop_12
-          ]}>
-            <Text style={[
-              fonts.gray200, 
-              fonts.size_16,
-              {width: '85%'}
-            ]}>{item.description}</Text>
-
-            <View style={[layout.row]}>
-              <TouchableOpacity onPress={() => {
-                // dispatch(toggleTodos({
-                //   id: item.id,
-                //   completed: false
-                // }));
-              }} style={[
-                gutters.marginRight_12
-              ]}>
-                <IconByVariant path={'update'} stroke={colors.gray400} />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => {
-                deleteSelectedTodo(item.id);
-              }}>
-                <IconByVariant path={'delete'} stroke={colors.red500} />
-              </TouchableOpacity>
-            </View>
-          </View>
-
-        {/* ) : (
-
-          <View style={[
-            borders.rounded_16,
-            layout.row, 
-            layout.justifyBetween,
-            {
-              padding: 6,
-              paddingTop: 12,
-              alignItems: 'center', 
-              backgroundColor: '#111111'
-            }
-          ]}>
-            <TextInput
-              style={[ 
-                fonts.size_16,
-                fonts.gray200,
-                { margin: 0, padding: 0, borderWidth: 0, width: '85%' },
-              ]}
-              defaultValue={item.title}
-              onChangeText={(text) => {
-                listItem = text;
-              }}
-              autoCorrect={false}
-            />
-
-            <View style={[layout.row]}>
-              <TouchableOpacity onPress={() => {
-                // dispatch(updateTodos({
-                //   id: item.id,
-                //   title: listItem
-                // }));
-              }} style={[
-                gutters.marginRight_12
-              ]}>
-                <IconByVariant path={'save'} stroke={colors.gray400} />
-              </TouchableOpacity>
-            </View>
-          </View>
-        )} */}
-      </View>
-    )
+  async function updateSelectedTodoCheckbox({ id, isDone }: { id: number, isDone: boolean }) {
+    await updateTodo({ id, isDone })
+      .then(res => console.log(res?.data))
+      .catch(err => console.error(err));
   }
 
   return (
