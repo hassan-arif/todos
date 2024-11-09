@@ -14,7 +14,13 @@ export default function Home() {
   let { data, error, isLoading, refetch } = useGetTodosQuery({});
   const [ addTodo ] = useAddTodoMutation();
   const [ deleteTodo ] = useDeleteTodoMutation();
-  const [isModalVisible, setModalVisible] = React.useState(false);
+  const [ updateTodo ] = useUpdateTodoMutation();
+
+  const [ isCreate, setIsCreate ] = React.useState(true);
+  const [ isModalVisible, setModalVisible ] = React.useState(false);
+  const [ headerText, setHeaderText ] = React.useState('');
+  const [ id, setId ] = React.useState(-1);
+  const [ description, setDescription ] = React.useState('');
 
   if (error) {
     console.error('error', error);

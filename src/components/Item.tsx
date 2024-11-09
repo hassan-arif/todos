@@ -1,10 +1,22 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
+
+type UpdateCheckbox = {
+  id: number;
+  isDone: boolean;
+}
 
 interface ItemProps {
   id: number,
   isDone: boolean,
   description: string,
+
+  setCreate: (status: boolean) => void,
+  toggleModal: () => void,
+  setId: (id: number) => void,
+  setDescription: (description: string) => void,
+  setHeaderText: (headerText: string) => void,
+  updateTodoCheckbox: (data: UpdateCheckbox) => void;
 }
 
 export default function Item(props: ItemProps) {

@@ -3,15 +3,23 @@ import Modal from 'react-native-modal';
 import { View, Text, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
 import { IconByVariant } from './atoms';
 
+type UpdateDescription = {
+  id: number;
+  description: string;
+}
+
 interface CustomModalProps {
   isVisible: boolean;
   isCreate: boolean; // If true, behaves for creating a new item. If false, behaves for updating an existing item.
   toggleVisibility: () => void;
 
   headerText: string;
+  id: number;
   defaultTodo: string;
 
   addTodo: (todo: string) => void;
+  deleteTodo: (id: number) => void;
+  updateTodoDescription: (data: UpdateDescription) => void;
 }
 
 export default function CustomModal(props: CustomModalProps) {
