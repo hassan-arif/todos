@@ -18,7 +18,7 @@ export default function Header(props: HeaderProps) {
     <View style={styles.header}>
 
       <Text style={styles.headerText}>
-        {props.count ? `Task List ${props.count}` : 'Task List'}
+        Task List {props.count && `(${props.count})`}
       </Text>
 
       <CustomButton
