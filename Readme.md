@@ -32,9 +32,8 @@ Now restart the server before moving forward.
 
 ### Client App
 ```bash
-git clone https://github.com/hassanmahmood-dubizzlelabs/learning.git
-cd learning
-git checkout rtk-todo-v2 # LATEST
+git clone https://github.com/hassan-arif/todos.git
+cd todos
 yarn
 yarn start
 a
