@@ -12,6 +12,11 @@ import { AssetByVariant } from '@/components/atoms';
 import { SafeScreen } from '@/components/templates';
 
 function Startup({ navigation }: RootScreenProps<Paths.Startup>) {
+  /**
+   * Startup screen is the first screen of the app.
+   * @param {object} navigation - The navigation object provided by the navigator.
+   * @returns {JSX.Element}
+   */
   const { layout, gutters, fonts } = useTheme();
   const { t } = useTranslation();
 
@@ -26,7 +31,7 @@ function Startup({ navigation }: RootScreenProps<Paths.Startup>) {
     if (isSuccess) {
       navigation.reset({
         index: 0,
-        routes: [{ name: Paths.Example }],
+        routes: [{ name: Paths.Home }],
       });
     }
   }, [isSuccess, navigation]);
@@ -39,10 +44,11 @@ function Startup({ navigation }: RootScreenProps<Paths.Startup>) {
           layout.col,
           layout.itemsCenter,
           layout.justifyCenter,
+          {backgroundColor: 'black'}
         ]}
       >
         <AssetByVariant
-          path={'tom'}
+          path={'tick'}
           resizeMode={'contain'}
           style={{ height: 300, width: 300 }}
         />

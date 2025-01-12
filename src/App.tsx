@@ -8,6 +8,12 @@ import { ThemeProvider } from '@/theme';
 import ApplicationNavigator from '@/navigation/Application';
 
 import '@/translations';
+import { Provider } from 'react-redux';
+import { store } from '@/store/index';
+
+// Ignore all log notifications on emulator
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs();
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -24,13 +30,15 @@ export const storage = new MMKV();
 
 function App() {
   return (
-    <GestureHandlerRootView>
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider storage={storage}>
-          <ApplicationNavigator />
-        </ThemeProvider>
-      </QueryClientProvider>
-    </GestureHandlerRootView>
+    <Provider store={store}>
+      <GestureHandlerRootView>
+        <QueryClientProvider client={queryClient}>
+          <ThemeProvider storage={storage}>
+            <ApplicationNavigator />
+          </ThemeProvider>
+        </QueryClientProvider>
+      </GestureHandlerRootView>
+    </Provider>
   );
 }
 
